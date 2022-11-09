@@ -3,8 +3,6 @@ name: pr-ci
 on:
   pull_request:
     branches: [main]
-    paths:
-      - "charts/**"
 
 jobs:
   pr-ci:

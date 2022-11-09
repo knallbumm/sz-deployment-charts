@@ -2,15 +2,17 @@ name: Release Charts
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - "charts/**"
+    branches: [main]
 
 jobs:
+  ci:
+    uses: ./.github/workflows/ci-workflow.yml
+  
   release:
     permissions:
       contents: write
+    timeout-minutes: 10
+    needs: ci
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
