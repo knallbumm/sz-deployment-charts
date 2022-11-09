@@ -6,4 +6,4 @@ on:
 
 jobs:
   pr-ci:
-    uses: ./.github/workflows/ci-workflow.yml
+    uses: ./.github/workflows/ci-workflow.yaml
