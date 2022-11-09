@@ -1,0 +1,29 @@
+{{- if .Values.routing.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ .Release.Name }}-virtualservice
+spec:
+  hosts: {{- toYaml .Values.routing.hosts | nindent 2 }}
+  gateways: 
+    {{- if .Values.gateway.enabled }}
+    {{ .Values.gateway.name | default (print .Release.Name "-gateway") }}
+    {{- end}}
+
+    {{- if .Values.routing.gateways }}
+    {{- toYaml .Values.routing.gateways | nindent 4 }}
+    {{- end}}
+  http:
+    {{- if .Values.routing.deploymentMatch }}
+    - match: {{- toYaml .Values.routing.deploymentMatch | nindent 6}}
+      route:
+      - destination:
+          port:
+            number: {{ .Values.deployment.port }}
+          host: {{ .Release.Name }}-svc
+    {{- end }}
+
+    {{- if .Values.routing.additionalHttp }}
+    {{- toYaml .Values.routing.additionalHttp | nindent 2}}
+    {{- end }}
+{{- end }}

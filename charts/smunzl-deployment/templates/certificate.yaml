@@ -1,0 +1,13 @@
+{{- if .Values.gateway.enabled }}
+{{- if .Values.gateway.tls.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .Release.Name }}-cert
+  namespace: istio-system
+spec:
+  secretName: {{ .Release.Name }}-cert
+  dnsNames: {{ .Values.gateway.hosts }}
+  issuerRef: {{- toYaml .Values.gateway.tls.issuerRef | nindent 4}}
+{{- end }}
+{{- end }}

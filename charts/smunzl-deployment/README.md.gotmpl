@@ -1,0 +1,19 @@
+{{ template "chart.header" . }}
+{{ template "chart.versionBadge" . }}
+
+{{ template "chart.description" . }}
+
+## Install smunzl-deployment chart
+
+### Prerequisites
+
+Before installing this chart you need to make sure that
+
+- [istio](https://istio.io/) has already been installed on the k8s cluster.
+- a namespace where the service shall be installed into has already been created on the K8S cluster.
+
+## Chart Configuration Parameters
+
+The following table lists the configurable parameters of the chart and its default values.
+
+{{ template "chart.valuesSection" . }}

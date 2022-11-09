@@ -1,0 +1,5 @@
+apiVersion: v2
+name: smunzl-deployment
+description: A Chart for deploying services and apps inside the smunzl cluster
+type: application
+version: 0.0.1

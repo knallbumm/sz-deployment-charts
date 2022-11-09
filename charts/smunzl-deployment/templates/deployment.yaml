@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      {{- if .Values.deployment.imagePullSecrets }}
+      imagePullSecrets: {{ toYaml .Values.deployment.imagePullSecrets | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Release.Name }}-deployment
+          image: {{ .Values.deployment.image }}
+          ports:
+            - containerPort: {{ .Values.deployment.port }}
+          env:
+          {{- if .Values.deployment.configmap.enabled }}
+          {{- range $key, $value := .Values.deployment.configmap.values }}
+            - name: {{$key}}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $.Release.Name }}-deployment-config
+                  key: {{$key}}
+          {{- end}}
+          {{- end}}
+          {{- if .Values.deployment.env }}
+          {{- toYaml .Values.deployment.env | nindent 12 }}
+          {{- end}}

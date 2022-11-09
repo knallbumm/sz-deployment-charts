@@ -1,0 +1,36 @@
+{{- if .Values.gateway.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: {{ .Values.gateway.name | default (print .Release.Name "-gateway") }}
+spec:
+  selector:
+    app: istio-ingressgateway
+  servers:
+  {{- if or (.Values.gateway.tls.httpsRedirect) (not .Values.gateway.tls.enabled) }}
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    {{- if .Values.gateway.hosts }}
+    hosts: {{- toYaml .Values.gateway.hosts | nindent 4 }}
+    {{- end }}
+    {{- if .Values.gateway.tls.httpsRedirect }}
+    tls:
+      httpsRedirect: true # sends 301 redirect for http requests
+    {{- end}}
+  {{- end }}
+
+  {{- if .Values.gateway.tls.enabled }}
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    {{- if .Values.gateway.hosts }}
+    hosts: {{- toYaml .Values.gateway.hosts | nindent 4 }}
+    {{- end }}
+    tls:
+      mode: SIMPLE # enables HTTPS on this port
+      credentialName: {{ .Release.Name }}-cert
+  {{- end }}
+{{- end }}

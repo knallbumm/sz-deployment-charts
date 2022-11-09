@@ -1,0 +1,47 @@
+gateway:
+  enabled: true
+  # -- Name of Gateway Resource. Defaults to: {{ .Release.Name }}-gateway
+  name:  ""
+  # -- List of usable hosts
+  hosts: []
+
+  tls:
+    # -- Whether to create and apply a TLS-Certificate
+    enabled: true
+    # -- Whether to redirect all traffic from http to https
+    httpsRedirect: true
+    # -- Certificate Resource spec.issuerRef
+    issuerRef:
+      name: letsencrypt-staging
+      kind: ClusterIssuer
+
+# configures virtualservice
+routing:
+  enabled: true
+  # -- Hosts, the VirtualService should listen too
+  hosts: [landing.int.smunzl.art]
+  # -- Matcher helper for deployment, see [istio request routing](https://istio.io/latest/docs/tasks/traffic-management/request-routing/)
+  deploymentMatch:
+    - uri:
+        prefix: /
+  # -- Additional matchers/routes, see [istio request routing](https://istio.io/latest/docs/tasks/traffic-management/request-routing/)
+  additionalHttp: []
+  # -- Gateways for the VirtualService. Will always include this charts' Gateway, if used.
+  gateways: []
+
+deployment:
+  # -- Amount of pod replicas
+  replicas: 1
+  # -- Docker image uri
+  image: ghcr.io/knallbumm/sz-app-landingpage:0.5.2
+  # -- Image pull secrets, useful when interacting with private registy
+  imagePullSecrets: {}
+  # -- Container-port to expose per Service
+  port: 3000
+  configmap:
+    enabled: true
+    # -- Values for configmap. The values will be passed as container envs, exactly matching the key names.
+    values: {}
+
+  # -- Additional [kubernetes container envs](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/)
+  env: []
