@@ -4,7 +4,7 @@ kind: VirtualService
 metadata:
   name: {{ .Release.Name }}-virtualservice
 spec:
-  hosts: {{- toYaml .Values.routing.hosts | nindent 2 }}
+  hosts: {{- toYaml .Values.routing.hosts | nindent 4 }}
   gateways: 
     {{- if .Values.gateway.enabled }}
     {{ .Values.gateway.name | default (print .Release.Name "-gateway") }}
@@ -24,6 +24,6 @@ spec:
     {{- end }}
 
     {{- if .Values.routing.additionalHttp }}
-    {{- toYaml .Values.routing.additionalHttp | nindent 2}}
+    {{- toYaml .Values.routing.additionalHttp | nindent 4}}
     {{- end }}
 {{- end }}

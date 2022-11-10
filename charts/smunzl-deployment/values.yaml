@@ -1,5 +1,5 @@
 gateway:
-  enabled: true
+  enabled: false
   # -- Name of Gateway Resource. Defaults to: {{ .Release.Name }}-gateway
   name:  ""
   # -- List of usable hosts
@@ -7,9 +7,9 @@ gateway:
 
   tls:
     # -- Whether to create and apply a TLS-Certificate
-    enabled: true
+    enabled: false
     # -- Whether to redirect all traffic from http to https
-    httpsRedirect: true
+    httpsRedirect: false
     # -- Certificate Resource spec.issuerRef
     issuerRef:
       name: letsencrypt-staging
@@ -17,9 +17,9 @@ gateway:
 
 # configures virtualservice
 routing:
-  enabled: true
+  enabled: false
   # -- Hosts, the VirtualService should listen too
-  hosts: [landing.int.smunzl.art]
+  hosts: []
   # -- Matcher helper for deployment, see [istio request routing](https://istio.io/latest/docs/tasks/traffic-management/request-routing/)
   deploymentMatch:
     - uri:
@@ -39,7 +39,7 @@ deployment:
   # -- Container-port to expose per Service
   port: 3000
   configmap:
-    enabled: true
+    enabled: false
     # -- Values for configmap. The values will be passed as container envs, exactly matching the key names.
     values: {}
 
