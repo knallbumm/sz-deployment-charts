@@ -7,7 +7,7 @@ spec:
   hosts: {{- toYaml .Values.routing.hosts | nindent 4 }}
   gateways: 
     {{- if .Values.gateway.enabled }}
-    {{ .Values.gateway.name | default (print .Release.Name "-gateway") }}
+    - {{ .Values.gateway.name | default (print .Release.Name "-gateway") }}
     {{- end}}
 
     {{- if .Values.routing.gateways }}
