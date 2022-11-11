@@ -1,6 +1,6 @@
 # smunzl-deployment
 
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) 
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square)
 
 A Chart for deploying services and apps inside the smunzl cluster
 
@@ -21,13 +21,19 @@ The following table lists the configurable parameters of the chart and its defau
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| deployment.autoscaling.enabled | bool | `false` |  |
+| deployment.autoscaling.maxReplicas | int | `2` |  |
+| deployment.autoscaling.metrics.additionalMetrics | object | `{}` | raw HorizontalPodAutoscaler metrics |
+| deployment.autoscaling.metrics.averageUtilizationCpu | string | `""` | average cpu utilization, see [kubernetes hpa docs](https://kubernetes.io/de/docs/tasks/run-application/horizontal-pod-autoscale/#details-zum-algorithmus) |
+| deployment.autoscaling.minReplicas | int | `1` |  |
 | deployment.configmap.enabled | bool | `false` |  |
 | deployment.configmap.values | object | `{}` | Values for configmap. The values will be passed as container envs, exactly matching the key names. |
 | deployment.env | list | `[]` | Additional [kubernetes container envs](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/) |
-| deployment.image | string | `"ghcr.io/knallbumm/sz-app-landingpage:0.5.2"` | Docker image uri |
+| deployment.image | string | `"nginxinc/nginx-unprivileged"` | Docker image uri |
 | deployment.imagePullSecrets | object | `{}` | Image pull secrets, useful when interacting with private registy |
-| deployment.port | int | `3000` | Container-port to expose per Service |
+| deployment.port | int | `8080` | Container-port to expose per Service |
 | deployment.replicas | int | `1` | Amount of pod replicas |
+| deployment.resources.requests | object | `{}` | See [kubernetes requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container) |
 | gateway.enabled | bool | `false` |  |
 | gateway.hosts | list | `[]` | List of usable hosts |
 | gateway.name | string | `""` | Name of Gateway Resource. Defaults to: {{ .Release.Name }}-gateway |
@@ -38,4 +44,4 @@ The following table lists the configurable parameters of the chart and its defau
 | routing.deploymentMatch | list | `[{"uri":{"prefix":"/"}}]` | Matcher helper for deployment, see [istio request routing](https://istio.io/latest/docs/tasks/traffic-management/request-routing/) |
 | routing.enabled | bool | `false` |  |
 | routing.gateways | list | `[]` | Gateways for the VirtualService. Will always include this charts' Gateway, if used. |
-| routing.hosts | list | `[]` | Hosts, the VirtualService should listen too |
+| routing.hosts | list | `["*"]` | Hosts, the VirtualService should listen too |

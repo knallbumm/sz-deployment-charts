@@ -5,7 +5,9 @@ metadata:
   labels:
     app: {{ .Release.Name }}
 spec:
+  {{- if not .Values.deployment.autoscaling.enabled }}
   replicas: {{ .Values.deployment.replicas }}
+  {{- end }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}
@@ -35,3 +37,7 @@ spec:
           {{- if .Values.deployment.env }}
           {{- toYaml .Values.deployment.env | nindent 12 }}
           {{- end}}
+          resources:
+            requests:
+              cpu: {{ ((.Values.deployment.resources).requests).cpu }}
+              memory: {{ ((.Values.deployment.resources).requests).memory }}
