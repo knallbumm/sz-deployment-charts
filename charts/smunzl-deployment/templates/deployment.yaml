@@ -13,14 +13,18 @@ spec:
       app: {{ .Release.Name }}
   template:
     metadata:
+      {{- if (.Values.deployment.metadata).annotations }}
+      annotations: {{- toYaml .Values.deployment.metadata.annotations | nindent 8 }}
+      {{- end }}
       labels:
         app: {{ .Release.Name }}
     spec:
       {{- if .Values.deployment.imagePullSecrets }}
-      imagePullSecrets: {{ toYaml .Values.deployment.imagePullSecrets | nindent 8 }}
+      imagePullSecrets: {{- toYaml .Values.deployment.imagePullSecrets | nindent 8 }}
       {{- end }}
       containers:
         - name: {{ .Release.Name }}-deployment
+          serviceAccountName: {{ .Values.deployment.serviceAccountName }}
           image: {{ .Values.deployment.image }}
           ports:
             - containerPort: {{ .Values.deployment.port }}

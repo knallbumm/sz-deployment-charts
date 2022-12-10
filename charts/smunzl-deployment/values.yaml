@@ -30,6 +30,11 @@ routing:
   gateways: []
 
 deployment:
+  # -- spec.template.metadata for pods
+  metadata:
+    annotations: {}
+  # -- serviceAccount for pods to use
+  serviceAccountName: ""
   # -- Amount of pod replicas
   replicas: 1
   # -- Docker image uri

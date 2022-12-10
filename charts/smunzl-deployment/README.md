@@ -31,9 +31,11 @@ The following table lists the configurable parameters of the chart and its defau
 | deployment.env | list | `[]` | Additional [kubernetes container envs](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/) |
 | deployment.image | string | `"nginxinc/nginx-unprivileged"` | Docker image uri |
 | deployment.imagePullSecrets | object | `{}` | Image pull secrets, useful when interacting with private registy |
+| deployment.metadata | object | `{"annotations":{}}` | spec.template.metadata for pods |
 | deployment.port | int | `8080` | Container-port to expose per Service |
 | deployment.replicas | int | `1` | Amount of pod replicas |
 | deployment.resources.requests | object | `{}` | See [kubernetes requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container) |
+| deployment.serviceAccountName | string | `""` | serviceAccount for pods to use |
 | gateway.enabled | bool | `false` |  |
 | gateway.hosts | list | `[]` | List of usable hosts |
 | gateway.name | string | `""` | Name of Gateway Resource. Defaults to: {{ .Release.Name }}-gateway |
