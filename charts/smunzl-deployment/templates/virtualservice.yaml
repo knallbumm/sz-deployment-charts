@@ -14,8 +14,8 @@ spec:
     {{- toYaml .Values.routing.gateways | nindent 4 }}
     {{- end}}
   http:
-    {{- if .Values.routing.deploymentMatch }}
-    - match: {{- toYaml .Values.routing.deploymentMatch | nindent 6}}
+    {{- if .Values.routing.deploymentRoute }}
+    - {{- toYaml .Values.routing.deploymentRoute | nindent 6}}
       route:
       - destination:
           port:

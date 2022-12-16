@@ -1,6 +1,6 @@
 # smunzl-deployment
 
-![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square)
 
 A Chart for deploying services and apps inside the smunzl cluster
 
@@ -42,8 +42,8 @@ The following table lists the configurable parameters of the chart and its defau
 | gateway.tls.enabled | bool | `false` | Whether to create and apply a TLS-Certificate |
 | gateway.tls.httpsRedirect | bool | `false` | Whether to redirect all traffic from http to https |
 | gateway.tls.issuerRef | object | `{"kind":"ClusterIssuer","name":"letsencrypt-staging"}` | Certificate Resource spec.issuerRef |
-| routing.additionalHttp | list | `[]` | Additional matchers/routes, see [istio request routing](https://istio.io/latest/docs/tasks/traffic-management/request-routing/) |
-| routing.deploymentMatch | list | `[{"uri":{"prefix":"/"}}]` | Matcher helper for deployment, see [istio request routing](https://istio.io/latest/docs/tasks/traffic-management/request-routing/) |
+| routing.additionalHttp | list | `[]` | Additional HTTPRoutes, see [istio request routing](https://istio.io/latest/docs/tasks/traffic-management/request-routing/) |
+| routing.deploymentRoute | object | `{"match":[{"uri":{"prefix":"/"}}]}` | HTTPRoute config for deployment, see [istio HTTPRoute](https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPRoute) |
 | routing.enabled | bool | `false` |  |
 | routing.gateways | list | `[]` | Gateways for the VirtualService. Will always include this charts' Gateway, if used. |
 | routing.hosts | list | `["*"]` | Hosts, the VirtualService should listen too |

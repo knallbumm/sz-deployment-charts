@@ -20,11 +20,12 @@ routing:
   enabled: false
   # -- Hosts, the VirtualService should listen too
   hosts: ["*"]
-  # -- Matcher helper for deployment, see [istio request routing](https://istio.io/latest/docs/tasks/traffic-management/request-routing/)
-  deploymentMatch:
-    - uri:
-        prefix: /
-  # -- Additional matchers/routes, see [istio request routing](https://istio.io/latest/docs/tasks/traffic-management/request-routing/)
+  # -- HTTPRoute config for deployment, see [istio HTTPRoute](https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPRoute)
+  deploymentRoute:
+    match: 
+      - uri:
+          prefix: /
+  # -- Additional HTTPRoutes, see [istio request routing](https://istio.io/latest/docs/tasks/traffic-management/request-routing/)
   additionalHttp: []
   # -- Gateways for the VirtualService. Will always include this charts' Gateway, if used.
   gateways: []
