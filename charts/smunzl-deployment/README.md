@@ -1,6 +1,6 @@
 # smunzl-deployment
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square)
 
 A Chart for deploying services and apps inside the smunzl cluster
 
@@ -28,6 +28,7 @@ The following table lists the configurable parameters of the chart and its defau
 | deployment.autoscaling.minReplicas | int | `1` |  |
 | deployment.configmap.enabled | bool | `false` |  |
 | deployment.configmap.values | object | `{}` | Values for configmap. The values will be passed as container envs, exactly matching the key names. |
+| deployment.enabled | bool | `true` | whether to create deployment, service, ... |
 | deployment.env | list | `[]` | Additional [kubernetes container envs](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/) |
 | deployment.image | string | `"nginxinc/nginx-unprivileged"` | Docker image uri |
 | deployment.imagePullSecrets | object | `{}` | Image pull secrets, useful when interacting with private registy |

@@ -31,6 +31,8 @@ routing:
   gateways: []
 
 deployment:
+  # -- whether to create deployment, service, ...
+  enabled: true
   # -- spec.template.metadata for pods
   metadata:
     annotations: {}

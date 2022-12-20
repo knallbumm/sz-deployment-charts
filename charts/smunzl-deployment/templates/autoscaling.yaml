@@ -1,3 +1,4 @@
+{{- if .Values.deployment.enabled }}
 {{- if .Values.deployment.autoscaling.enabled }}
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
@@ -21,4 +22,5 @@ spec:
     {{- if .Values.deployment.autoscaling.metrics.additionalMetrics}}
     {{- toYaml .Values.deployment.autoscaling.metrics.additionalMetrics | nindent 4}}
     {{- end }}
+{{- end }}
 {{- end }}
