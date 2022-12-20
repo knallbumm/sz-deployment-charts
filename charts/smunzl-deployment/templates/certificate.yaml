@@ -7,7 +7,7 @@ metadata:
   namespace: istio-system
 spec:
   secretName: {{ .Release.Name }}-cert
-  dnsNames: {{ .Values.gateway.hosts }}
+  dnsNames: {{- toYaml .Values.gateway.hosts | nindent 4 }}
   issuerRef: {{- toYaml .Values.gateway.tls.issuerRef | nindent 4}}
 {{- end }}
 {{- end }}
