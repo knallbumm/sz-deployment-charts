@@ -2,6 +2,15 @@ apiVersion: v1
 entries:
   smunzl-deployment:
   - apiVersion: v2
+    created: "2022-12-20T23:29:25.341467958Z"
+    description: A Chart for deploying services and apps inside the smunzl cluster
+    digest: 40dfd1ee01baf2a36abe9ee1cacf7b5d551cf208ce847ed69284c5bff00b474e
+    name: smunzl-deployment
+    type: application
+    urls:
+    - https://github.com/knallbumm/sz-deployment-charts/releases/download/smunzl-deployment-0.6.0/smunzl-deployment-0.6.0.tgz
+    version: 0.6.0
+  - apiVersion: v2
     created: "2022-12-20T00:56:16.500001306Z"
     description: A Chart for deploying services and apps inside the smunzl cluster
     digest: c4fac1daba6f7536198036915e4418a649c3823eadd9a97a85203b12c8aa7df9
@@ -82,4 +91,4 @@ entries:
     urls:
     - https://github.com/knallbumm/sz-deployment-charts/releases/download/smunzl-deployment-0.1.0/smunzl-deployment-0.1.0.tgz
     version: 0.1.0
-generated: "2022-12-20T00:56:16.500111905Z"
+generated: "2022-12-20T23:29:25.341495657Z"
