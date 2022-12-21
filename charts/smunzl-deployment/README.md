@@ -1,6 +1,6 @@
 # smunzl-deployment
 
-![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) 
+![Version: 0.6.1](https://img.shields.io/badge/Version-0.6.1-informational?style=flat-square) 
 
 A Chart for deploying services and apps inside the smunzl cluster
 
@@ -35,7 +35,7 @@ The following table lists the configurable parameters of the chart and its defau
 | deployment.metadata | object | `{"annotations":{}}` | spec.template.metadata for pods |
 | deployment.port | int | `8080` | Container-port to expose per Service |
 | deployment.replicas | int | `1` | Amount of pod replicas |
-| deployment.resources.requests | object | `{}` | See [kubernetes requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container) |
+| deployment.resources.requests | object | `{"cpu":"0","memory":"0"}` | See [kubernetes requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container) |
 | deployment.serviceAccountName | string | `""` | serviceAccount for pods to use |
 | gateway.enabled | bool | `false` |  |
 | gateway.hosts | list | `[]` | List of usable hosts |

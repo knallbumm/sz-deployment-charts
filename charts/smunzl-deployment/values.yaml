@@ -49,7 +49,9 @@ deployment:
 
   resources:
     # -- See [kubernetes requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)
-    requests: {}
+    requests:
+      cpu: '0'
+      memory: '0'
 
   autoscaling:
     enabled: false
