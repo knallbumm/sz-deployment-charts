@@ -20,7 +20,7 @@ spec:
       - destination:
           port:
             number: {{ .Values.deployment.port }}
-          host: {{ .Release.Name }}-svc
+          host: {{ .Release.Name }}
     {{- end }}
 
     {{- if .Values.routing.additionalHttp }}
