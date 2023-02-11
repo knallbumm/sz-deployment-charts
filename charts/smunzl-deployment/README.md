@@ -1,6 +1,6 @@
 # smunzl-deployment
 
-![Version: 0.6.2](https://img.shields.io/badge/Version-0.6.2-informational?style=flat-square) 
+![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square)
 
 A Chart for deploying services and apps inside the smunzl cluster
 
@@ -10,8 +10,8 @@ A Chart for deploying services and apps inside the smunzl cluster
 
 Before installing this chart you need to make sure that
 
-- [istio](https://istio.io/) has already been installed on the k8s cluster.
-- a namespace where the service shall be installed into has already been created on the K8S cluster.
+- [istio](https://istio.io/) is installed.
+- a namespace for the service is present.
 
 ## Chart Configuration Parameters
 
@@ -31,12 +31,12 @@ The following table lists the configurable parameters of the chart and its defau
 | deployment.enabled | bool | `true` | whether to create deployment, service, ... |
 | deployment.env | list | `[]` | Additional [kubernetes container envs](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/) |
 | deployment.image | string | `"nginxinc/nginx-unprivileged"` | Docker image uri |
-| deployment.imagePullSecrets | object | `{}` | Image pull secrets, useful when interacting with private registy |
-| deployment.metadata | object | `{"annotations":{}}` | spec.template.metadata for pods |
 | deployment.port | int | `8080` | Container-port to expose per Service |
-| deployment.replicas | int | `1` | Amount of pod replicas |
+| deployment.replicas | int | `1` | serviceAccount for pods to use |
 | deployment.resources.requests | object | `{"cpu":"0","memory":"0"}` | See [kubernetes requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container) |
-| deployment.serviceAccountName | string | `""` | serviceAccount for pods to use |
+| deployment.template.metadata | object | `{"annotations":{},"labels":{}}` | template metadata |
+| deployment.template.spec | object | `{}` | template specs |
+| deployment.volumeMounts | object | `{}` | Container volume mounts |
 | gateway.enabled | bool | `false` |  |
 | gateway.hosts | list | `[]` | List of usable hosts |
 | gateway.name | string | `""` | Name of Gateway Resource. Defaults to: {{ .Release.Name }}-gateway |

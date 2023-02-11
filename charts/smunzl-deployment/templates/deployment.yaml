@@ -14,21 +14,23 @@ spec:
       app: {{ .Release.Name }}
   template:
     metadata:
-      {{- if (.Values.deployment.metadata).annotations }}
-      annotations: {{- toYaml .Values.deployment.metadata.annotations | nindent 8 }}
+      {{- if ((.Values.deployment.template).metadata).annotations }}
+      annotations: {{- toYaml .Values.deployment.template.metadata.annotations | nindent 8 }}
       {{- end }}
       labels:
         app: {{ .Release.Name }}
+        {{- if ((.Values.deployment.template).metadata).labels }}
+        {{- toYaml .Values.deployment.template.metadata.labels | nindent 8 }}
+        {{- end }}
     spec:
-      {{- if .Values.deployment.imagePullSecrets }}
-      imagePullSecrets: {{- toYaml .Values.deployment.imagePullSecrets | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ .Values.deployment.serviceAccountName }}
       containers:
         - name: {{ .Release.Name }}-deployment
           image: {{ .Values.deployment.image }}
           ports:
             - containerPort: {{ .Values.deployment.port }}
+          {{- if .Values.deployment.volumeMounts }}
+          volumeMounts: {{- toYaml .Values.deployment.volumeMounts | nindent 12}}
+          {{- end }}
           env:
           {{- if .Values.deployment.configmap.enabled }}
           {{- range $key, $value := .Values.deployment.configmap.values }}
@@ -37,13 +39,16 @@ spec:
                 configMapKeyRef:
                   name: {{ $.Release.Name }}-deployment-config
                   key: {{$key}}
-          {{- end}}
-          {{- end}}
+          {{- end }}
+          {{- end }}
           {{- if .Values.deployment.env }}
           {{- toYaml .Values.deployment.env | nindent 12 }}
-          {{- end}}
+          {{- end }}
           resources:
             requests:
               cpu: {{ ((.Values.deployment.resources).requests).cpu }}
               memory: {{ ((.Values.deployment.resources).requests).memory }}
+      {{- if (.Values.deployment.template).spec }}
+      {{- toYaml .Values.deployment.template.spec | nindent 6}}
+      {{- end }}
 {{- end }}

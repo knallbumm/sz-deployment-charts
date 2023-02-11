@@ -34,18 +34,23 @@ deployment:
   # -- whether to create deployment, service, ...
   enabled: true
   # -- spec.template.metadata for pods
-  metadata:
-    annotations: {}
   # -- serviceAccount for pods to use
-  serviceAccountName: ""
-  # -- Amount of pod replicas
   replicas: 1
   # -- Docker image uri
   image: nginxinc/nginx-unprivileged
-  # -- Image pull secrets, useful when interacting with private registy
-  imagePullSecrets: {}
   # -- Container-port to expose per Service
   port: 8080
+
+  # -- Container volume mounts
+  volumeMounts: {}
+  
+  template:
+    # -- template metadata
+    metadata:
+      annotations: {}
+      labels: {}
+    # -- template specs
+    spec: {}
 
   resources:
     # -- See [kubernetes requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)
