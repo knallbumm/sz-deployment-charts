@@ -5,7 +5,7 @@ metadata:
   name: {{ .Release.Name }}-virtualservice
 spec:
   hosts: {{- toYaml .Values.routing.hosts | nindent 4 }}
-  gateways: 
+  gateways:
     {{- if .Values.gateway.enabled }}
     - {{ .Values.gateway.name | default (print .Release.Name "-gateway") }}
     {{- end}}

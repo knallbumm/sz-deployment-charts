@@ -5,6 +5,9 @@ kind: Certificate
 metadata:
   name: {{ .Release.Name }}-cert
   namespace: istio-system
+  annotations:
+    # https://github.com/istio/istio/issues/27643
+    cert-manager.io/issue-temporary-certificate: "true"
 spec:
   secretName: {{ .Release.Name }}-cert
   dnsNames: {{- toYaml .Values.gateway.hosts | nindent 4 }}
