@@ -1,5 +1,5 @@
 gateway:
-  enabled: true
+  enabled: false
   # -- Name of Gateway Resource. Defaults to: {{ .Release.Name }}-gateway
   name: ""
   # -- List of usable hosts
@@ -7,9 +7,9 @@ gateway:
 
   tls:
     # -- Whether to create and apply a TLS-Certificate
-    enabled: true
+    enabled: false
     # -- Whether to redirect all traffic from http to https
-    httpsRedirect: true
+    httpsRedirect: false
     # -- Certificate Resource spec.issuerRef
     issuerRef:
       name: letsencrypt-staging

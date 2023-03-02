@@ -1,4 +1,5 @@
 {{ $gatewayName := .Values.gateway.name | default (print .Release.Name "-gateway") -}}
+{{ $httpGatewayName := ternary (print $gatewayName "-https-redirect") $gatewayName .Values.gateway.tls.httpsRedirect}}
 
 {{- if .Values.gateway.enabled }}
 
@@ -6,7 +7,7 @@
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: {{ $gatewayName }}-https
+  name: {{ $gatewayName }}
 spec:
   selector:
     app: istio-ingressgateway
@@ -28,7 +29,7 @@ spec:
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: {{ $gatewayName }}-http
+  name: {{ $httpGatewayName }}
 spec:
   selector:
     app: istio-ingressgateway
@@ -41,14 +42,14 @@ spec:
     hosts: {{- toYaml .Values.gateway.hosts | nindent 4 }}
     {{- end }}
     tls:
-      httpsRedirect: false # sends 301 redirect for http requests
+      httpsRedirect: false
 {{- end }}
 ---
 {{- if .Values.gateway.tls.httpsRedirect }}
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: {{ $gatewayName }}-https-redirect
+  name: {{ $httpGatewayName }}-vs
 spec:
   hosts:
     - "*"
