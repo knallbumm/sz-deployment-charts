@@ -14,6 +14,15 @@ spec:
     {{- toYaml .Values.routing.gateways | nindent 4 }}
     {{- end}}
   http:
+    {{- if .Values.routing.httpsRedirect }}
+    - match:
+      - withoutHeaders:
+          :path:
+            prefix: /.well-known/acme-challenge/
+      redirect:
+        scheme: https
+        redirectCode: 302 # 302 to not mess with risky permanent redirections since a workaround
+    {{- end }}
     {{- if .Values.routing.deploymentRoute }}
     - {{- toYaml .Values.routing.deploymentRoute | nindent 6}}
       route:

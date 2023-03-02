@@ -1,8 +1,10 @@
+{{ $gatewayName := .Values.gateway.name | default (print .Release.Name "-gateway") -}}
+
 {{- if .Values.gateway.enabled }}
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: {{ .Values.gateway.name | default (print .Release.Name "-gateway") }}
+  name: {{ $gatewayName }}
 spec:
   selector:
     app: istio-ingressgateway
@@ -15,10 +17,8 @@ spec:
     {{- if .Values.gateway.hosts }}
     hosts: {{- toYaml .Values.gateway.hosts | nindent 4 }}
     {{- end }}
-    {{- if .Values.gateway.tls.httpsRedirect }}
     tls:
-      httpsRedirect: true # sends 301 redirect for http requests
-    {{- end}}
+      httpsRedirect: false # sends 301 redirect for http requests
   {{- end }}
 
   {{- if .Values.gateway.tls.enabled }}
@@ -33,4 +33,24 @@ spec:
       mode: SIMPLE # enables HTTPS on this port
       credentialName: {{ .Release.Name }}-cert
   {{- end }}
+---
+{{- if .Values.gateway.tls.httpsRedirect }}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ $gatewayName }}-https-redirect
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - {{ $gatewayName }}
+  http:
+    - match:
+      - withoutHeaders:
+          :path:
+            prefix: /.well-known/acme-challenge/
+      redirect:
+        scheme: https
+        redirectCode: 302 # 302 to not mess with risky permanent redirections since a workaround
+{{- end }}
 {{- end }}
