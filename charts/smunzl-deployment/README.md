@@ -1,6 +1,6 @@
 # smunzl-deployment
 
-![Version: 0.7.6](https://img.shields.io/badge/Version-0.7.6-informational?style=flat-square) 
+![Version: 0.7.7](https://img.shields.io/badge/Version-0.7.7-informational?style=flat-square) 
 
 A Chart for deploying services and apps inside the smunzl cluster
 
