@@ -20,21 +20,20 @@ routing:
   enabled: false
   # -- Hosts, the VirtualService should listen too
   hosts: ["*"]
+  # -- Additional HTTPRoutes, see [istio request routing](https://istio.io/latest/docs/tasks/traffic-management/request-routing/)
+  additionalHttp: []
   # -- HTTPRoute config for deployment, see [istio HTTPRoute](https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPRoute)
   deploymentRoute:
     match: 
       - uri:
           prefix: /
-  # -- Additional HTTPRoutes, see [istio request routing](https://istio.io/latest/docs/tasks/traffic-management/request-routing/)
-  additionalHttp: []
   # -- Gateways for the VirtualService. Will always include this charts' Gateway, if used.
   gateways: []
 
 deployment:
   # -- whether to create deployment, service, ...
   enabled: true
-  # -- spec.template.metadata for pods
-  # -- serviceAccount for pods to use
+  # -- Deployment Replicas
   replicas: 1
   # -- Docker image uri
   image: nginxinc/nginx-unprivileged

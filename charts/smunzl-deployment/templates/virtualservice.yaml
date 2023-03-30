@@ -14,17 +14,18 @@ spec:
     {{- toYaml .Values.routing.gateways | nindent 4 }}
     {{- end}}
   http:
+    {{- if .Values.routing.additionalHttp }}
+    {{- toYaml .Values.routing.additionalHttp | nindent 4}}
+    {{- end }}
+
     {{- if .Values.routing.deploymentRoute }}
-    - {{- toYaml .Values.routing.deploymentRoute | nindent 6}}
-      route:
+    - route:
       - destination:
           port:
             number: {{ .Values.deployment.port }}
           host: {{ .Release.Name }}
-    {{- end }}
-
-    {{- if .Values.routing.additionalHttp }}
-    {{- toYaml .Values.routing.additionalHttp | nindent 4}}
+      {{- toYaml .Values.routing.deploymentRoute | nindent 6}}
+     
     {{- end }}
 {{- end }}
 

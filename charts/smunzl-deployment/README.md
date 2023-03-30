@@ -1,6 +1,6 @@
 # smunzl-deployment
 
-![Version: 0.7.7](https://img.shields.io/badge/Version-0.7.7-informational?style=flat-square) 
+![Version: 0.7.8](https://img.shields.io/badge/Version-0.7.8-informational?style=flat-square) 
 
 A Chart for deploying services and apps inside the smunzl cluster
 
@@ -32,7 +32,7 @@ The following table lists the configurable parameters of the chart and its defau
 | deployment.env | list | `[]` | Additional [kubernetes container envs](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/) |
 | deployment.image | string | `"nginxinc/nginx-unprivileged"` | Docker image uri |
 | deployment.port | int | `8080` | Container-port to expose per Service |
-| deployment.replicas | int | `1` | serviceAccount for pods to use |
+| deployment.replicas | int | `1` | Deployment Replicas |
 | deployment.resources.requests | object | `{"cpu":"0","memory":"0"}` | See [kubernetes requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container) |
 | deployment.template.metadata | object | `{"annotations":{},"labels":{}}` | template metadata |
 | deployment.template.spec | object | `{}` | template specs |
