@@ -1,5 +1,6 @@
 {{- if .Values.gateway.enabled }}
 {{- if .Values.gateway.tls.enabled }}
+{{- if not .Values.gateway.tls.credentialName }} # user provides the secret themselves
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -9,5 +10,6 @@ spec:
   secretName: {{ .Release.Name }}-cert
   dnsNames: {{- toYaml .Values.gateway.hosts | nindent 4 }}
   issuerRef: {{- toYaml .Values.gateway.tls.issuerRef | nindent 4}}
+{{- end }}
 {{- end }}
 {{- end }}

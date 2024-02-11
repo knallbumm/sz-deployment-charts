@@ -1,6 +1,7 @@
 gateway:
   enabled: false
-  # -- Name of Gateway Resource. Defaults to: {{ .Release.Name }}-gateway
+  # -- Name of Gateway Resource
+  # @default -- `{{ .Release.Name }}-gateway`
   name: ""
   # -- List of usable hosts
   hosts: []
@@ -10,6 +11,11 @@ gateway:
     enabled: false
     # -- Whether to redirect all traffic from http to https
     httpsRedirect: false
+
+    # -- the name of the TLS-Certificate secret
+    # @default -- `{{ .Release.Name }}-tls`
+    credentialName: ""
+
     # -- Certificate Resource spec.issuerRef
     issuerRef:
       name: letsencrypt-staging
@@ -24,7 +30,7 @@ routing:
   additionalHttp: []
   # -- HTTPRoute config for deployment, see [istio HTTPRoute](https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPRoute)
   deploymentRoute:
-    match: 
+    match:
       - uri:
           prefix: /
   # -- Gateways for the VirtualService. Will always include this charts' Gateway, if used.
@@ -42,7 +48,7 @@ deployment:
 
   # -- Container volume mounts
   volumeMounts: {}
-  
+
   template:
     # -- template metadata
     metadata:
@@ -54,8 +60,8 @@ deployment:
   resources:
     # -- See [kubernetes requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)
     requests:
-      cpu: '0'
-      memory: '0'
+      cpu: "0"
+      memory: "0"
 
   autoscaling:
     enabled: false

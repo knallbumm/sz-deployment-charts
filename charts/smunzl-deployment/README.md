@@ -1,6 +1,6 @@
 # smunzl-deployment
 
-![Version: 0.7.9](https://img.shields.io/badge/Version-0.7.9-informational?style=flat-square)
+![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square)
 
 A Chart for deploying services and apps inside the smunzl cluster
 
@@ -39,7 +39,8 @@ The following table lists the configurable parameters of the chart and its defau
 | deployment.volumeMounts | object | `{}` | Container volume mounts |
 | gateway.enabled | bool | `false` |  |
 | gateway.hosts | list | `[]` | List of usable hosts |
-| gateway.name | string | `""` | Name of Gateway Resource. Defaults to: {{ .Release.Name }}-gateway |
+| gateway.name | string | `{{ .Release.Name }}-gateway` | Name of Gateway Resource |
+| gateway.tls.credentialName | string | `{{ .Release.Name }}-tls` | the name of the TLS-Certificate secret |
 | gateway.tls.enabled | bool | `false` | Whether to create and apply a TLS-Certificate |
 | gateway.tls.httpsRedirect | bool | `false` | Whether to redirect all traffic from http to https |
 | gateway.tls.issuerRef | object | `{"kind":"ClusterIssuer","name":"letsencrypt-staging"}` | Certificate Resource spec.issuerRef |
