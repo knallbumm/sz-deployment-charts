@@ -62,7 +62,7 @@ spec:
             prefix: /.well-known/acme-challenge/
       redirect:
         scheme: https
-        redirectCode: 302 # 302 to not mess with risky permanent redirections since a workaround
+        redirectCode: 301
 {{- end }}
 
 {{- end }}
