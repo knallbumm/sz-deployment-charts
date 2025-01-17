@@ -1,3 +1,12 @@
+{{- $nonWWWRedirectCode := 301 }}
+{{- if .Values.routing.nonWWWRedirect }}
+{{- if (eq (typeOf .Values.routing.nonWWWRedirect) "bool") }}
+{{- $nonWWWRedirectCode = 301 }}
+{{- else }}
+{{- $nonWWWRedirectCode = .Values.routing.nonWWWRedirect.redirectCode }}
+{{- end }}
+{{- end}}
+
 {{- if .Values.routing.enabled }}
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
@@ -14,6 +23,19 @@ spec:
     {{- toYaml .Values.routing.gateways | nindent 4 }}
     {{- end}}
   http:
+    {{- if .Values.routing.nonWWWRedirect }}
+    {{- range .Values.gateway.hosts }}
+    {{- if and (hasPrefix "www." . ) (not (eq . "www")) }}
+    - match:
+      - authority:
+          exact: {{ . }}
+      redirect:
+        authority: {{ . | replace "www." "" }}
+        redirectCode: {{ $nonWWWRedirectCode }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
+
     {{- if .Values.routing.additionalHttp }}
     {{- toYaml .Values.routing.additionalHttp | nindent 4}}
     {{- end }}

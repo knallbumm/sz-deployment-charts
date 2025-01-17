@@ -1,6 +1,6 @@
 # smunzl-deployment
 
-![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square)
+![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square)
 
 A Chart for deploying services and apps inside the smunzl cluster
 
@@ -15,7 +15,7 @@ Before installing this chart you need to make sure that
 
 ## Chart Configuration Parameters
 
-The following table lists the configurable parameters of the chart and its default values.
+The following table lists the configurable parameters of the chart and its default values (generated with [helm-docs](https://github.com/norwoodj/helm-docs)).
 
 ## Values
 
@@ -49,3 +49,4 @@ The following table lists the configurable parameters of the chart and its defau
 | routing.enabled | bool | `false` |  |
 | routing.gateways | list | `[]` | Gateways for the VirtualService. Will always include this charts' Gateway, if used. |
 | routing.hosts | list | `["*"]` | Hosts, the VirtualService should listen too |
+| routing.nonWWWRedirect | object | `{"redirectCode":301}` | whether to redirect off of www. |
