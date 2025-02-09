@@ -1,9 +1,15 @@
-{{- $nonWWWRedirectCode := 301 }}
-{{- if .Values.routing.nonWWWRedirect }}
-{{- if (eq (typeOf .Values.routing.nonWWWRedirect) "bool") }}
-{{- $nonWWWRedirectCode = 301 }}
+{{- $hostRedirectCode := 301 }}
+{{- $hostRedirectFromHosts := .Values.gateway.hosts }}
+{{- $hostRedirectHost := "" }}
+
+{{- if .Values.routing.hostRedirect }}
+{{- if (eq (typeOf .Values.routing.hostRedirect) "string") }}
+{{- $hostRedirectHost = .Values.routing.hostRedirect }}
+{{- $hostRedirectCode = 301 }}
 {{- else }}
-{{- $nonWWWRedirectCode = .Values.routing.nonWWWRedirect.redirectCode }}
+{{- $hostRedirectHost = .Values.routing.hostRedirect.targetHost }}
+{{- $hostRedirectFromHosts = .Values.routing.hostRedirect.redirectFromHosts | default .Values.gateway.hosts }}
+{{- $hostRedirectCode = .Values.routing.hostRedirect.redirectCode | default 301 }}
 {{- end }}
 {{- end}}
 
@@ -23,22 +29,21 @@ spec:
     {{- toYaml .Values.routing.gateways | nindent 4 }}
     {{- end}}
   http:
-    {{- if .Values.routing.nonWWWRedirect }}
-    {{- range .Values.gateway.hosts }}
-    {{- if and (hasPrefix "www." . ) (not (eq . "www")) }}
+    {{- if .Values.routing.additionalHttp }}
+    {{- toYaml .Values.routing.additionalHttp | nindent 4}}
+    {{- end }}
+
+    {{- if $hostRedirectHost }}
+    {{- range (without $hostRedirectFromHosts $hostRedirectHost) }}
     - match:
       - authority:
           exact: {{ . }}
       redirect:
-        authority: {{ . | replace "www." "" }}
-        redirectCode: {{ $nonWWWRedirectCode }}
-    {{- end }}
+        authority: {{ $hostRedirectHost }}
+        redirectCode: {{ $hostRedirectCode }}
     {{- end }}
     {{- end }}
 
-    {{- if .Values.routing.additionalHttp }}
-    {{- toYaml .Values.routing.additionalHttp | nindent 4}}
-    {{- end }}
 
     {{- if .Values.routing.deploymentRoute }}
     - route:

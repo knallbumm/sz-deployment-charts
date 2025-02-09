@@ -1,6 +1,6 @@
 # smunzl-deployment
 
-![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square)
+![Version: 0.10.0](https://img.shields.io/badge/Version-0.10.0-informational?style=flat-square)
 
 A Chart for deploying services and apps inside the smunzl cluster
 
@@ -48,5 +48,8 @@ The following table lists the configurable parameters of the chart and its defau
 | routing.deploymentRoute | object | `{"match":[{"uri":{"prefix":"/"}}]}` | HTTPRoute config for deployment, see [istio HTTPRoute](https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPRoute) |
 | routing.enabled | bool | `false` |  |
 | routing.gateways | list | `[]` | Gateways for the VirtualService. Will always include this charts' Gateway, if used. |
+| routing.hostRedirect | string, object | `{"redirectCode":301,"redirectFromHosts":[],"targetHost":"33-prozent.com"}` | configures which host to redirect to. |
+| routing.hostRedirect.redirectCode | int | `301` | code to use on redirect |
+| routing.hostRedirect.redirectFromHosts | list | `{{ .gateway.hosts }}` | hosts to redirect off of |
+| routing.hostRedirect.targetHost | string | `"33-prozent.com"` | host to redirect to |
 | routing.hosts | list | `["*"]` | Hosts, the VirtualService should listen too |
-| routing.nonWWWRedirect | object | `{"redirectCode":301}` | whether to redirect off of www. |

@@ -24,9 +24,15 @@ gateway:
 # configures virtualservice
 routing:
   enabled: false
-  # -- whether to redirect off of www.
-  nonWWWRedirect:
+  # -- (string, object) configures which host to redirect to.
+  hostRedirect:
+    # -- host to redirect to
+    targetHost: ''
+    # -- code to use on redirect
     redirectCode: 301
+    # -- hosts to redirect off of
+    # @default -- `{{ .gateway.hosts }}`
+    redirectFromHosts: []
   # -- Hosts, the VirtualService should listen too
   hosts: ["*"]
   # -- Additional HTTPRoutes, see [istio request routing](https://istio.io/latest/docs/tasks/traffic-management/request-routing/)
